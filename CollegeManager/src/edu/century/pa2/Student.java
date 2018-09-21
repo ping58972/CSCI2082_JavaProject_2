@@ -60,9 +60,25 @@ public class Student {
 		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", birthdate=" + getBirthdate() + ", email=" + email + "]";
 	}
+	
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
 	public static void main(String[] args) {
-		Student std = new Student("Ping Danddank", "12-14-1986");
+		Student std = new Student();
+		Student std2 = new Student("Ping Danddank", "12-14-1986");
 		System.out.println(std);
+		System.out.println(std2);
+		Course cos = new Course();
+		System.out.println(cos);
 	}
 	
 }
