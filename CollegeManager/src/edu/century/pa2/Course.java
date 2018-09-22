@@ -1,6 +1,6 @@
 package edu.century.pa2;
 
-public class Course {
+public class Course implements Cloneable {
 	private int id;
 	private String subject;
 	private int credits;
@@ -69,15 +69,26 @@ public class Course {
 		return "Course [id=" + id + ", subject=" + subject + ", credits=" + credits + ", courseNumber=" + courseNumber
 				+ ", courseSection=" + courseSection + ", status=" + status + ", instructor=" + instructor + "]";
 	}
+
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
+	protected Course clone() {
+		Course copy = null;
+		try {
+			copy = (Course)super.clone();
+			
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return copy;
 	}
 	@Override
 	public boolean equals(Object arg0) {
-		// TODO Auto-generated method stub
-		return super.equals(arg0);
+		Course cou = (Course) arg0;
+		return (cou.id == this.id)&&
+				(cou.courseNumber == this.courseNumber)&&
+				(cou.courseSection == this.courseSection)&&
+				cou.subject.equals(this.subject);
 	}
 	
 }

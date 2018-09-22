@@ -1,8 +1,9 @@
 package edu.century.pa2;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
-public class Student {
+public class Student implements Cloneable{
 	private String studentId;
 	private String firstName;
 	private String lastName;
@@ -20,8 +21,8 @@ public class Student {
 		this.firstName = fullName.split(" ")[0];
 		this.lastName = fullName.split(" ")[1];
 		String[] mmddyy = birthdate.split("-");
-		this.birthdate = new GregorianCalendar(Integer.parseInt(mmddyy[2]),
-				Integer.parseInt(mmddyy[0]), Integer.parseInt(mmddyy[1]));
+		this.birthdate = new GregorianCalendar((Integer.parseInt(mmddyy[2])),
+				(Integer.parseInt(mmddyy[0])-1), Integer.parseInt(mmddyy[1]));
 		this.email = this.studentId+"@ping.edu";
 	}
 	public String getStudentId() {
@@ -40,12 +41,12 @@ public class Student {
 		this.lastName = lastName;
 	}
 	public String getBirthdate() {
-		return birthdate.getTime().toString();
+		return new SimpleDateFormat("MMM-dd-yyyy").format(birthdate.getTime());
 	}
 	public void setBirthdate(String birthdate) {
 		String[] mmddyy = birthdate.split("-");
-		this.birthdate = new GregorianCalendar(Integer.parseInt(mmddyy[2]),
-				Integer.parseInt(mmddyy[0]), Integer.parseInt(mmddyy[1]));
+		this.birthdate = new GregorianCalendar((Integer.parseInt(mmddyy[2])),
+				(Integer.parseInt(mmddyy[0])-1), Integer.parseInt(mmddyy[1]));
 	}
 	public String getEmail() {
 		return email;
@@ -63,22 +64,21 @@ public class Student {
 	
 	
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
+	public Student clone(){
+		Student copy = null;
+		try {
+			copy = (Student)super.clone();
+		}catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return copy;
 	}
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
-	}
-	public static void main(String[] args) {
-		Student std = new Student();
-		Student std2 = new Student("Ping Danddank", "12-14-1986");
-		System.out.println(std);
-		System.out.println(std2);
-		Course cos = new Course();
-		System.out.println(cos);
-	}
-	
+		Student std = (Student)obj;
+		return (std.firstName.equalsIgnoreCase(this.firstName))&&
+				(std.lastName.equalsIgnoreCase(this.lastName))&&
+				//(std.studentId.equalsIgnoreCase(this.studentId))&&
+				(std.birthdate.equals(this.birthdate));
+	}	
 }
