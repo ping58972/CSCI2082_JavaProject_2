@@ -4,9 +4,9 @@ public class CourseNode {
 	private Course data;
 	private CourseNode link;
 	
-	public CourseNode(Course course) {
+	public CourseNode(Course course, CourseNode link) {
 		this.data = course;
-		this.link = null;
+		this.link = link;
 	}
 
 	public Course getData() {

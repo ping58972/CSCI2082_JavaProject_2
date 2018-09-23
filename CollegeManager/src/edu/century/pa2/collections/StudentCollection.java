@@ -281,7 +281,8 @@ public class StudentCollection implements Cloneable{
 		String str = "";
 		for(Student std : items)
 			str += std.toString();
-		return "the number of Student is: "+ this.numberOfItems +"\nList all of student:\n"+ str;
+		return "the number of Student is: "
+					+ this.numberOfItems +"\nList all of student:\n"+ str;
 	}
 	
 }

@@ -9,9 +9,10 @@ public class Course implements Cloneable {
 	private String status;
 	private String instructor;
 	public Course() {
-		this(100, "Java2018", 5, 1111, 2222, "Open", "Zaky");
+		this(1000, "Java2018", 5, 1111, 2222, "Open", "Zaky");
 	}
-	public Course(int id, String subject, int credits, int courseNumber, int courseSection, String status,
+	public Course(int id, String subject, int credits, 
+			int courseNumber, int courseSection, String status,
 			String instructor) {
 		super();
 		this.id = id;
@@ -71,7 +72,7 @@ public class Course implements Cloneable {
 	}
 
 	@Override
-	protected Course clone() {
+	public Course clone() {
 		Course copy = null;
 		try {
 			copy = (Course)super.clone();
