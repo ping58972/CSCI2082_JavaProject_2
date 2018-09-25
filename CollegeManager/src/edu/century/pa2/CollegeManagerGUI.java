@@ -45,7 +45,7 @@ public class CollegeManagerGUI {
 		//cc.addMany(c4, c5, c6);
 //		cc.addArray(cca);
 		CourseCollection cc3 = CourseCollection.union(cc, cc2);
-		System.out.println(cc3.hasElement(c4));
+		System.out.println(cc3.remove(c4));
 		System.out.println(cc3.toString());
 		
 /*		 EventQueue.invokeLater(new Runnable() {

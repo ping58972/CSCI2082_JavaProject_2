@@ -54,8 +54,7 @@ public class CourseCollection implements Cloneable {
 				return;
 			}
 			tmp = tmp.getLink();
-		}
-		
+		}	
 	}
 	
 	/*
@@ -77,18 +76,46 @@ public class CourseCollection implements Cloneable {
 	/*
 	 * */
 	public int countOccurrences(Course target) {
-		return 0;
+		int answer=0;
+		for (CourseNode i = head; i != null; i = i.getLink())
+			if(i.getData().equals(target)) 
+				answer ++;	
+		return answer;
+	}
+	
+	/*
+	 * */
+	public Course getCourseByPosition(int index) {
+		CourseNode tmp = head;
+		int i;
+		if(index<0 || index > numberOfNodes)
+			throw new IllegalArgumentException("The position is not availible!");
+		for(i=0; (i<index)&& (tmp != null); i++)
+			tmp = tmp.getLink();
+		return tmp.getData();
 	}
 	
 	/*
 	 * */
 	public Course grab() {
-		return null;
+		return getCourseByPosition((int)(Math.random()*numberOfNodes));
 	}
 	
 	/*
 	 * */
 	public boolean remove(Course target) {
+		for(CourseNode i=head; i!=null; i=i.getLink()) {
+			if(head.getData().equals(target)) {
+				head = new CourseNode(head.getLink().getData(),head.getLink().getLink());
+				numberOfNodes--;
+				return true;
+			}		
+			if(i.getLink().getData().equals(target)) {
+				i.setLink(i.getLink().getLink()); 
+				numberOfNodes--;
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -120,19 +147,30 @@ public class CourseCollection implements Cloneable {
 	/*
 	 * */
 	public Course getCourseById(int id) {
+		for(CourseNode i = head; i !=null; i=i.getLink()) 
+			if(i.getData().getId()== id)
+				return i.getData();
 		return null;
 	}
 	
 	/*
 	 * */
 	public Course getCourseBySubject(String subject) {
+		for(CourseNode i = head; i !=null; i=i.getLink()) 
+			if(i.getData().getSubject()== subject)
+				return i.getData();
 		return null;
 	}
 	
 	/*
 	 * */
 	public Course[] getArray() {
-		return null;
+		Course [] array = new Course[numberOfNodes];
+		for(CourseNode i = head; i !=null; i=i.getLink()) { 
+			int j=0;
+			array[j++] = i.getData().clone();
+		}
+		return array;
 	}
 	
 	/*
@@ -152,8 +190,13 @@ public class CourseCollection implements Cloneable {
 	 * */
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+		CourseCollection tmp = (CourseCollection)obj;
+		if(this.numberOfNodes != tmp.numberOfNodes)
+		return false;
+		for(CourseNode i = head; i !=null; i=i.getLink()) 
+			if(tmp.hasElement(i.getData()))
+				return true;
+		return false;
 	}
 
 	/*
