@@ -23,6 +23,16 @@ public class Course implements Cloneable {
 		this.status = status;
 		this.instructor = instructor;
 	}
+	public Course(String subject, String instructor) {
+		super();
+		this.id =( 1000+(int)(Math.random()*999 +1)%999);
+		this.subject = subject;
+		this.credits = (int)(Math.random()*5 +1);
+		this.courseNumber = 100+(int)(Math.random()*99 +1)%99;
+		this.courseSection = 10+(int)(Math.random()*9 +1)%9;
+		this.status = "Open";
+		this.instructor = instructor;
+	}
 	public int getId() {
 		return id;
 	}
@@ -67,8 +77,8 @@ public class Course implements Cloneable {
 	}
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", subject=" + subject + ", credits=" + credits + ", courseNumber=" + courseNumber
-				+ ", courseSection=" + courseSection + ", status=" + status + ", instructor=" + instructor + "]";
+		return "ID=" + id + ", subject=" + subject + ", credits=" + credits + ", courseNumber=" + courseNumber
+				+ ", courseSection=" + courseSection + ", status=" + status + ", instructor=" + instructor;
 	}
 
 	@Override

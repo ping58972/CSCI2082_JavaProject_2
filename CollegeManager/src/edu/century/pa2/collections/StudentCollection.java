@@ -157,11 +157,31 @@ public class StudentCollection implements Cloneable{
 	 * */
 	public boolean remove(Student target) {
 		for (int i = 0; i<items.length; i++)
-			if(items[i] == target) {
-				System.arraycopy(items, i+1, items, 0, (items.length -(i +1)));
+			if(items[i].equals(target) ) {
+				//items[i]= items[i+1];
+				System.arraycopy(items, i+1, items, i, (items.length - i-1));
+				numberOfItems--;
 				return true;
-			} else return false;		
-		return true;
+			};		
+		return false;
+	}
+	
+	public boolean removeByLname(String lname) {
+		for (int i = 0; i<items.length; i++)
+			if(items[i].getLastName().equalsIgnoreCase(lname)) {
+				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
+				return true;
+			};		
+		return false;
+	}
+	
+	public boolean removeById(String id) {
+		for (int i = 0; i<items.length; i++)
+			if(items[i].getStudentId().equalsIgnoreCase(id)) {
+				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
+				return true;
+			};		
+		return false;
 	}
 	
 	/*size
@@ -254,17 +274,17 @@ public class StudentCollection implements Cloneable{
 	
 	/**/
 	public Student getStudentById(String id) {
-		for(Student std : items) 
-			if(std.getStudentId() == id)
-				return std.clone();
+		for(int i =0; i< numberOfItems; i++) 
+			if(items[i].getStudentId().equals(id))
+				return items[i].clone();
 		return null;
 	}
 	
 	/**/
 	public Student getStudentByLastName(String lname) {
-		for(Student std : items) 
-			if(std.getLastName() == lname)
-				return std.clone();
+		for(int i =0; i< numberOfItems; i++) 
+			if(items[i].getLastName().equals(lname))
+				return items[i].clone();
 		return null;
 	}
 	
@@ -274,15 +294,18 @@ public class StudentCollection implements Cloneable{
 			System.arraycopy(items, 0, copy, 0, this.size());
 		return copy;
 	}
+	public Student getStudentByIndex(int index) {
+		return items[index].clone();
+	}
 	
 	/*to transform to String.*/
 	@Override
 	public String toString() {
-		String str = "";
-		for(Student std : items)
-			str += std.toString();
-		return "the number of Student is: "
-					+ this.numberOfItems +"\nList all of student:\n"+ str;
+		String strs = "";
+		for(int i=0; i<numberOfItems; i++) {
+			strs += String.format("%d %s", i+1,items[i].toString()+"\n") ;
+			}
+		return  strs;
 	}
 	
 }

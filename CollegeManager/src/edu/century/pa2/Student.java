@@ -14,7 +14,7 @@ public class Student implements Cloneable{
 		this("Pink Ping", "01-01-2000");
 	}
 	public Student(String fullName, String birthdate){
-		int studentid = 1000;
+		int studentid = ( 1000+(int)(Math.random()*999 +1)%999);
 		studentid += increaseId;
 		increaseId ++;
 		this.studentId = "cs"+ String.format("%d",studentid);
@@ -58,8 +58,8 @@ public class Student implements Cloneable{
 	
 	@Override
 	public String toString() {
-		return "Student [studentId=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", birthdate=" + getBirthdate() + ", email=" + email + "]";
+		return "ID=" + studentId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", birthdate=" + getBirthdate() + ", email=" + email;
 	}
 	
 	

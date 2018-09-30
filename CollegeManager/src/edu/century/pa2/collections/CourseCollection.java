@@ -138,6 +138,7 @@ public class CourseCollection implements Cloneable {
 	/*
 	 * */
 	public boolean hasElement(Course course) {
+		if(course == null) return false;
 		for(CourseNode i = head; i !=null; i=i.getLink()) 
 			if(i.getData().equals(course))
 				return true;
@@ -157,7 +158,7 @@ public class CourseCollection implements Cloneable {
 	 * */
 	public Course getCourseBySubject(String subject) {
 		for(CourseNode i = head; i !=null; i=i.getLink()) 
-			if(i.getData().getSubject()== subject)
+			if(i.getData().getSubject().equals(subject))
 				return i.getData();
 		return null;
 	}
@@ -177,12 +178,13 @@ public class CourseCollection implements Cloneable {
 	 * */
 	@Override
 	public CourseCollection clone() {
-		CourseCollection copy = null;
-		try {
-			copy = (CourseCollection)super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
+		CourseCollection copy = new CourseCollection();
+	
+			for(CourseNode i = head; i !=null; i=i.getLink()) {
+				copy.add(i.getData().clone());
+			}
+			
+	
 		return copy;
 	}
 
@@ -204,9 +206,10 @@ public class CourseCollection implements Cloneable {
 	@Override
 	public String toString() {
 		String str="";
-		int j=0;
+		int j=1;
 		for (CourseNode i= head; i != null; i=i.getLink())
-			str +=String.format("%d %s", j++,(i.getData().toString()+"\n")) ;
+			str += String.format("%d %s", j++,(i.getData().toString()+"\n")) ;
+		if(str.equals("")) return "No Selected Course";
 		return str;
 	}
 }
