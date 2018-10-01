@@ -38,8 +38,8 @@ public class CollegeManagerGUI  implements ActionListener {
 	private JFrame frame;
 	private JFrame frameStd;
 	private JFrame frameCo;
-	private JTextField textField_2 = new JTextField();
-	private JTextField textField_1;
+	private JTextField textField_2 = new JTextField("Ping3");
+	private JTextField textField_1 = new JTextField("Java2018");
 	private JPanel studentPanel = new JPanel();
 	private JPanel panel_3 = new JPanel();
 	private JPanel panel_8 = new JPanel();
@@ -73,21 +73,21 @@ public class CollegeManagerGUI  implements ActionListener {
 	private JScrollPane scrollPane_2 = new JScrollPane(textArea_2);
 	private JPanel panel_6 = new JPanel();
 	private JButton btnNewButton_2 = new JButton("Edit Course List");
-	private JTextField tfStdFname = new JTextField();
+	private JTextField tfStdFname = new JTextField("John Smite");
 	private JTextArea textAreaAddStd = new JTextArea("Student List:\n");	
 	private JTextArea textAreaAddCo = new JTextArea("Course List:\n");
-	private JTextField tfStdRm = new JTextField();
-	private JTextField tfStdBD = new JTextField();
-	private JTextField tfCo1 = new JTextField();
-	private JTextField tfInstr = new JTextField();
-	private JTextField tfCoRm = new JTextField();
+	private JTextField tfStdRm = new JTextField("Smite");
+	private JTextField tfStdBD = new JTextField("5-25-1988");
+	private JTextField tfCo1 = new JTextField("Python2019");
+	private JTextField tfInstr = new JTextField("Peter");
+	private JTextField tfCoRm = new JTextField("C++2011");
 	private JScrollPane scrollPane_std = new JScrollPane(textAreaAddStd);
 	private JScrollPane scrollPane_co = new JScrollPane(textAreaAddCo);
 	private JComboBox comboRmCo = new JComboBox(new DefaultComboBoxModel(new String[] {"Subject", "ID"}));
 	private JComboBox comboRm = new JComboBox(new DefaultComboBoxModel(new String[] {"Last Name", "ID"}));
-	private final JPanel panel_14 = new JPanel();
-	private final JTextField textField = new JTextField();
-	private final JButton btnNewButton_5 = new JButton("RemoveC");	
+	private  JPanel panel_14 = new JPanel();
+	private JTextField textField = new JTextField("Java2017");
+	private  JButton btnNewButton_5 = new JButton("RemoveC");	
 	static StudentCollection studentAll; 
 	static CourseCollection courseAll;
 	static SelectionCollection selectionAll;
@@ -184,7 +184,7 @@ public class CollegeManagerGUI  implements ActionListener {
 		comboBox_1.addActionListener(this);
 		panel_12.add(comboBox_1);				
 		panel_5.add(panel_13);		
-		textField_1 = new JTextField();
+		
 		panel_13.add(textField_1);
 		textField_1.setColumns(10);		
 		btnNewButton_4.setEnabled(false);
@@ -491,12 +491,17 @@ public class CollegeManagerGUI  implements ActionListener {
 						+ "    Displays Courses List:    \n"
 						+ "-----------------------\n");
 				textArea_1.append(studentAll.toString());
+				selectionAll.update(studentAll, courseAll);
+				//if(courseAll != null)
+				//System.out.println("selectionAll.getAllSelectedCourse() = null");
 				String str = "";
 				for(SelectedCourse selC : selectionAll.getAllSelectedCourse()) {					
 					str += selC.toString();
 				}
 				textArea.append(str);
-				textArea_2.append(courseAll.toString());				
+				textArea_2.append(courseAll.toString());
+				if(courseAll.toString().equals(""))
+				System.out.println(courseAll.toString());
 			}
 			if(comboRm.getSelectedItem().equals("ID")) {
 				studentAll.remove(studentAll.getStudentById(tfStdRm.getText()));				
@@ -521,6 +526,7 @@ public class CollegeManagerGUI  implements ActionListener {
 						+ "    Displays Courses List:    \n"
 						+ "-----------------------\n");
 				textArea_1.append(studentAll.toString());
+				selectionAll.update(studentAll, courseAll);
 				String str = "";
 				for(SelectedCourse selC : selectionAll.getAllSelectedCourse()) {					
 					str += selC.toString();

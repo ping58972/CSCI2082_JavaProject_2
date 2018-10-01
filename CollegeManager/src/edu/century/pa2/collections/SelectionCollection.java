@@ -70,9 +70,10 @@ public class SelectionCollection implements Cloneable{
 		Creating a collection with capacity beyond Integer.MAX_VALUE causes arithmetic overflow.
  * */
 	public void update(StudentCollection stdAll, CourseCollection coAll ) {
-		ensureCapacity(stdAll.size()+1);
+		ensureCapacity(stdAll.size()*2+1);
 		items[numberOfItems] = new SelectedCourse(stdAll.getStudentByIndex(stdAll.size()-1), coAll.clone());
-		numberOfItems = stdAll.size();
+		//numberOfItems = stdAll.size();
+		numberOfItems++;
 	}
 	
 	/*add
@@ -108,7 +109,7 @@ public class SelectionCollection implements Cloneable{
 		Indicates insufficient memory for new int[newSize].*/
 	private void ensureCapacity(int newSize) {
 		SelectedCourse [] biggerArray = new SelectedCourse[newSize];
-		System.arraycopy(items, 0, biggerArray, 0, items.length);
+		System.arraycopy(items, 0, biggerArray, 0, numberOfItems);
 		items = biggerArray;	
 	}
 	
@@ -196,6 +197,7 @@ public class SelectionCollection implements Cloneable{
 		for (int i = 0; i<items.length; i++)
 			if(items[i] == target) {
 				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
+				numberOfItems--;
 				return true;
 			};		
 		return false;
@@ -214,6 +216,7 @@ public class SelectionCollection implements Cloneable{
 		for (int i = 0; i<items.length; i++)
 			if(items[i].getselectedStudent().equals(std)) {
 				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
+				numberOfItems--;
 				return true;
 			};		
 		return false;
