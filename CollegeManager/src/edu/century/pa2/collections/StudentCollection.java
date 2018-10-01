@@ -1,4 +1,15 @@
 package edu.century.pa2.collections;
+
+/**public class StudentCollection from the package edu.century.pa2
+ * 
+ *  Century College, CSCI 2082 Fall 2018.
+ *  StudentCollection.java, Programming Assignment 02.
+ *  
+ *  @author (Ping) Nalongsone Danddank
+ *  @version 1.0
+ *  @since 09/30/2018
+ * */
+
 import edu.century.pa2.Student;
 
 public class StudentCollection implements Cloneable{
@@ -166,6 +177,15 @@ public class StudentCollection implements Cloneable{
 		return false;
 	}
 	
+	/*removeById
+	public boolean removeByLname(String lname)
+	Remove one copy of a specified element from this Collection.
+	Parameter:
+		lname – the element to remove from this Collection
+	Postcondition:
+		If target was found in this Collection, then one copy of target has been removed and the method
+		returns true. Otherwise, this Collection remains unchanged, and the method returns false.
+	 * */
 	public boolean removeByLname(String lname) {
 		for (int i = 0; i<items.length; i++)
 			if(items[i].getLastName().equalsIgnoreCase(lname)) {
@@ -175,6 +195,16 @@ public class StudentCollection implements Cloneable{
 		return false;
 	}
 	
+	
+	/*removeById
+	public boolean removeById(String id)
+	Remove one copy of a specified element from this Collection.
+	Parameter:
+		id – the element to remove from this Collection
+	Postcondition:
+		If target was found in this Collection, then one copy of target has been removed and the method
+		returns true. Otherwise, this Collection remains unchanged, and the method returns false.
+	 * */
 	public boolean removeById(String id) {
 		for (int i = 0; i<items.length; i++)
 			if(items[i].getStudentId().equalsIgnoreCase(id)) {
@@ -272,15 +302,39 @@ public class StudentCollection implements Cloneable{
 		return true;
 	}
 	
-	/**/
+	/*
+	 * getStudentById
+		public Student getStudentById(String id)
+		Accessor method to determine the current element of this sequence.
+		Parameter:
+			id - a String Id that want to get from Student collection.
+		Precondition:
+			items[i].getStudentId() is not null.
+			Returns:
+				the current element of this sequence
+		Throws: IllegalStateException
+			Indicates that there is no current element.
+	 * */
 	public Student getStudentById(String id) {
 		for(int i =0; i< numberOfItems; i++) 
 			if(items[i].getStudentId().equals(id))
-				return items[i].clone();
+				return items[i];
 		return null;
 	}
 	
-	/**/
+	/*
+	 * getStudentByLastName
+		public Student getStudentById(String id)
+		Accessor method to determine the current element of this sequence.
+		Parameter:
+			lname - a String last name that want to get from Student collection.
+		Precondition:
+			items[i].getLastName() is not null.
+			Returns:
+				the current element of this sequence
+		Throws: IllegalStateException
+			Indicates that there is no current element.
+	 * */
 	public Student getStudentByLastName(String lname) {
 		for(int i =0; i< numberOfItems; i++) 
 			if(items[i].getLastName().equals(lname))
@@ -288,7 +342,19 @@ public class StudentCollection implements Cloneable{
 		return null;
 	}
 	
-	/**/
+	/*
+	 * getCurrent
+		public Student getStudentById(String id)
+		Accessor method to determine the current element of this sequence.
+		Parameter:
+			lname - a String last name that want to get from Student collection.
+		Precondition:
+			items[i].getLastName() is not null.
+			Returns:
+				the current element of this sequence
+		Throws: IllegalStateException
+			Indicates that there is no current element.
+	 * */
 	public Student[] getAllStudent() {
 		Student[] copy = new Student[this.size()];
 			System.arraycopy(items, 0, copy, 0, this.size());
@@ -298,7 +364,14 @@ public class StudentCollection implements Cloneable{
 		return items[index].clone();
 	}
 	
-	/*to transform to String.*/
+	/* @Descriptions 
+	 * 		To get info from student collection.
+	 * @Parameter 
+	 * @Precondition
+	 * @Return
+	 * 		the student collection values of instance object convert to String.
+	 * @Thorws 		
+	 * */
 	@Override
 	public String toString() {
 		String strs = "";

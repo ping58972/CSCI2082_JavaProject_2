@@ -1,5 +1,15 @@
 package edu.century.pa2.collections;
 
+/**public class SelectionCollection from the package edu.century.pa2
+ * 
+ *  Century College, CSCI 2082 Fall 2018.
+ *  SelectionCollection.java, Programming Assignment 02.
+ *  
+ *  @author (Ping) Nalongsone Danddank
+ *  @version 1.0
+ *  @since 09/30/2018
+ * */
+
 import edu.century.pa2.SelectedCourse;
 import edu.century.pa2.Student;
 
@@ -8,10 +18,35 @@ public class SelectionCollection implements Cloneable{
 	private SelectedCourse[] items;
 	private SelectedCourse setSelectedStd;
 	
+	/* Constructor for the SelectionCollection
+	public SelectionCollection( )
+	Initialize an empty Collection with an initial capacity of 10. Note that the add method works
+	efficiently (without needing more memory) until this capacity is reached.
+	Postcondition:
+		This Collection is empty and has an initial capacity of 10.
+	Throws: OutOfMemoryError
+		Indicates insufficient memory for new Student[10].
+ * */
 	public SelectionCollection() {
 		numberOfItems = 0;
 		items = new SelectedCourse[10];
 	}
+	
+	/*Second Constructor for the SelectionCollection
+	public SelectionCollection(StudentCollection stdAll, CourseCollection coAll )
+	Initialize an empty Collection with a specified initial capacity.
+	Parameter:
+		 stdAll – the initial StudentCollection of this Collection
+		 coAll -  the initial CourseCollection of this Collection
+	Precondition:
+		stdAll is non-null.
+		coAll is non-null.
+	Postcondition:
+		This Collection is empty and has the specified initial capacity.
+	Throws: IllegalArgumentException
+		Indicates that initSize is negative.
+	Throws: OutOfMemoryError
+		Indicates insufficient memory for allocating the Collection.*/
 	public SelectionCollection(StudentCollection stdAll, CourseCollection coAll ) {
 		items = new SelectedCourse[stdAll.size()];
 		numberOfItems = stdAll.size();
@@ -19,6 +54,40 @@ public class SelectionCollection implements Cloneable{
 			items[i] = new SelectedCourse(stdAll.getStudentByIndex(i), coAll.clone());
 		}
 	}
+	
+	/*update
+	public void update(StudentCollection stdAll, CourseCollection coAll )
+	update a new element to this collection. If this new element would take this collection beyond its current capacity,
+	then the capacity is increased before adding the new element.
+	Parameter:
+		stdAll – the new element that is being added
+		coAll – the new element that is being added
+	Postcondition:
+		A new copy of the element has been added to this collection.
+	Throws: OutOfMemoryError
+		Indicates insufficient memory for increasing the capacity.
+	Note:
+		Creating a collection with capacity beyond Integer.MAX_VALUE causes arithmetic overflow.
+ * */
+	public void update(StudentCollection stdAll, CourseCollection coAll ) {
+		ensureCapacity(stdAll.size()+1);
+		items[numberOfItems] = new SelectedCourse(stdAll.getStudentByIndex(stdAll.size()-1), coAll.clone());
+		numberOfItems = stdAll.size();
+	}
+	
+	/*add
+	public void add(SelectedCourse element)
+	Add a new element to this collection. If this new element would take this collection beyond its current capacity,
+	then the capacity is increased before adding the new element.
+	Parameter:
+		element – the new element that is being added
+	Postcondition:
+		A new copy of the element has been added to this collection.
+	Throws: OutOfMemoryError
+		Indicates insufficient memory for increasing the capacity.
+	Note:
+		Creating a collection with capacity beyond Integer.MAX_VALUE causes arithmetic overflow.
+ * */
 	public void add(SelectedCourse element) {
 		if(numberOfItems == items.length) {
 			ensureCapacity(numberOfItems *2 +1);
@@ -26,6 +95,17 @@ public class SelectionCollection implements Cloneable{
 		items[numberOfItems] = element;
 		numberOfItems ++;
 	}
+	
+	/*ensureCapacity
+	public void ensureCapacity(int newSize)
+	Change the current capacity of this Collection.
+	Parameter:
+		newSize – the new capacity for this Collection
+	Postcondition:
+		This Collection’s capacity has been changed to at least newSize. If the capacity was already
+		at or greater than newSize, then the capacity is left unchanged.
+	Throws: OutOfMemoryError
+		Indicates insufficient memory for new int[newSize].*/
 	private void ensureCapacity(int newSize) {
 		SelectedCourse [] biggerArray = new SelectedCourse[newSize];
 		System.arraycopy(items, 0, biggerArray, 0, items.length);
@@ -48,7 +128,7 @@ public class SelectionCollection implements Cloneable{
 	Note:
 		Creating a Collection with capacity beyond Integer.MAX_VALUE causes arithmetic overflow.
   */
-public void addAll(SelectionCollection addend) {
+	public void addAll(SelectionCollection addend) {
 	if(items.length <= (numberOfItems+ addend.numberOfItems)) {
 		ensureCapacity(numberOfItems+ addend.numberOfItems);
 	}
@@ -56,7 +136,7 @@ public void addAll(SelectionCollection addend) {
 	numberOfItems += addend.numberOfItems;
 }
 
-/*addMany
+	/*addMany
 	public void addMany(SelectedCourse...students)
 	Add a variable number of new elements to this Collection. If these new elements would take this Collection
 	beyond its current capacity, then the capacity is increased before adding the new elements.
@@ -69,13 +149,13 @@ public void addAll(SelectionCollection addend) {
 	Note:
 		Creating a Collection with capacity beyond Integer.MAX_VALUE causes arithmetic overflow.
  * */
-public void addMany(SelectedCourse...students) {
+	public void addMany(SelectedCourse...students) {
 	if(items.length <= (numberOfItems+ students.length)) {
 		ensureCapacity((numberOfItems+ students.length)*2);
 	}
 	System.arraycopy(students, 0, items, numberOfItems, students.length);
 	numberOfItems += students.length;
-}
+	}
 	/*getCapacity
 		public int getCapacity( )
 		Accessor method to determine the current capacity of this Collection. The add method works efficiently
@@ -115,12 +195,29 @@ public void addMany(SelectedCourse...students) {
 	public boolean remove(SelectedCourse target) {
 		for (int i = 0; i<items.length; i++)
 			if(items[i] == target) {
-				System.arraycopy(items, i+1, items, 0, (items.length -(i +1)));
+				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
 				return true;
 			};		
 		return false;
 	}
 	
+	/*removeByStudent
+	public boolean remove(SelectedCourse target)
+	Remove one copy of a specified element from this Collection.
+	Parameter:
+		std – the element to remove from this Collection
+	Postcondition:
+		If target was found in this Collection, then one copy of target has been removed and the method
+		returns true. Otherwise, this Collection remains unchanged, and the method returns false.
+ * */
+	public boolean removeByStudent(Student std) {
+		for (int i = 0; i<items.length; i++)
+			if(items[i].getselectedStudent().equals(std)) {
+				System.arraycopy(items, i+1, items, i, (items.length -(i +1)));
+				return true;
+			};		
+		return false;
+	}
 	/*size
 		public int size( )
 		Accessor method to determine the number of items in this Collection.
@@ -131,7 +228,7 @@ public void addMany(SelectedCourse...students) {
 		return this.numberOfItems;
 	}
 	
-/*	union
+	/*	union
 		public static SelectedCourseCollection union(SelectedCourseCollection stdc1, SelectedCourseCollection stdc2)
 		Create a new Collection that contains all the elements from two other Collection.
 		Parameters:
@@ -175,7 +272,7 @@ public void addMany(SelectedCourse...students) {
 	}
 	
 	/*clone
-		public IntArrayBag clone( )
+		protected SelectionCollection clone()
 		Generate a copy of this bag.
 		Returns:
 			The return value is a copy of this bag. Subsequent changes to the copy will not affect the
@@ -244,7 +341,15 @@ public void addMany(SelectedCourse...students) {
 	public Student getStudent() {
 		return this.setSelectedStd.getselectedStudent();
 	}
-	/*to transform to String.*/
+	
+	/* @Descriptions 
+	 * 		To get info from student collection.
+	 * @Parameter 
+	 * @Precondition
+	 * @Return
+	 * 		the student collection values of instance object convert to String.
+	 * @Thorws 		
+	 * */
 	@Override
 	public String toString() {
 		String strs = "";
@@ -252,5 +357,11 @@ public void addMany(SelectedCourse...students) {
 			strs += String.format("%d %s", i+1,items[i].toString()+"\n") ;
 			}
 		return  strs;
+	}
+	public boolean hasStudent(Student std) {
+		for(int i =0; i< numberOfItems; i++ ) 
+			if(items[i].getselectedStudent().equals(std))
+				return true;
+		return false;
 	}
 }
